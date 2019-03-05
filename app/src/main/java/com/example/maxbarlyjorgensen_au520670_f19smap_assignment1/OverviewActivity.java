@@ -60,7 +60,7 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(OverviewActivity.this, DetailsActivity.class);
-                i.putExtra("position", itemArrAdapt.getItem(position));
+                i.putExtra("DATA", itemArrAdapt.getItem(position));
 
 
                 startActivity(i);

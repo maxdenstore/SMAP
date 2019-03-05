@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity {
     private Button backBtn;
@@ -24,6 +27,21 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         });
+
+        String[] data = (String[]) getIntent().getSerializableExtra("DATA");
+
+
+        TextView plot = (TextView) findViewById(R.id.detailsplot);
+        plot.setText(data[1]);
+
+        TextView rating = (TextView) findViewById(R.id.rating);
+        rating.setText(data[3]);
+
+        TextView urating = (TextView) findViewById(R.id.rating2);
+      //  urating.setText(data[1]);
+
+        TextView title = (TextView) findViewById(R.id.detailstitle);
+        title.setText(data[0]);
 
     }
     private void goBackMain() {
