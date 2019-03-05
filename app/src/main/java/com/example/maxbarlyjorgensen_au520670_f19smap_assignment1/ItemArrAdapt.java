@@ -20,7 +20,9 @@ import static android.content.ContentValues.TAG;
 
 public class ItemArrAdapt extends ArrayAdapter {
 
+    Context context;
     private List<String[]> movieList = new ArrayList<String[]>();
+
 
 
     static class ItemView{
@@ -122,7 +124,6 @@ public class ItemArrAdapt extends ArrayAdapter {
 
 
         }
-
         return row;
     }
 }

@@ -32,52 +32,41 @@ public class OverviewActivity extends AppCompatActivity {
 
     private Button exitBtn;
 
-    private RelativeLayout relativeLayout;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overviewactivity);
 
-
-        exitBtn = (Button) findViewById(R.id.button2);
-        exitBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openDetails();
-            }
-
-        });
-
-        relativeLayout = (RelativeLayout)findViewById(R.id.layoutRel);
-
-
-
-
         listView = (ListView)findViewById(R.id.listView);
         itemArrAdapt = new ItemArrAdapt(getApplicationContext(),R.layout.relative);
 
-        Parcelable state = listView.onSaveInstanceState();
+       // Parcelable state = listView.onSaveInstanceState();
         listView.setAdapter(itemArrAdapt);
-        listView.onRestoreInstanceState(state);
+     //   listView.onRestoreInstanceState(state);
+
 
         InputStream inputStream = getResources().openRawResource(R.raw.movielist);
         CSVinput csVinput = new CSVinput(inputStream);
-        List<String[]> movList = csVinput.read();
+        final List<String[]> movList = csVinput.read();
+
+
 
         for(String[] data : movList) {
             itemArrAdapt.add(data);
         }
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(OverviewActivity.this, DetailsActivity.class);
+                startActivity(i);
+            }
+        });
+
+
+
 
     }
-    private void openDetails() {
-        Intent intent;
-        intent = new Intent(this, DetailsActivity.class);
-        startActivity(intent);
-    }
-
-
 
 }
