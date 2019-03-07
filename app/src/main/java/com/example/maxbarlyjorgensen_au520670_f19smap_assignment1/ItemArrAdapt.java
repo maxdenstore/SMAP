@@ -13,10 +13,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.opencsv.CSVWriter;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 public class ItemArrAdapt extends ArrayAdapter {
 
@@ -31,6 +34,7 @@ public class ItemArrAdapt extends ArrayAdapter {
         ImageView imgico;
         TextView userRate;
         TextView rate;
+        TextView watched;
     }
 
     public ItemArrAdapt(Context context, int resource) {
@@ -65,6 +69,7 @@ public class ItemArrAdapt extends ArrayAdapter {
             view.imgico = (ImageView) row.findViewById(R.id.imageViewR);
             view.rate = (TextView) row.findViewById(R.id.TextViewR);
             view.userRate = (TextView) row.findViewById(R.id.TextUR);
+            view.watched = (TextView) row.findViewById(R.id.OverviewWatched);
 
 
             row.setTag(view);
@@ -74,16 +79,31 @@ public class ItemArrAdapt extends ArrayAdapter {
         }
 
         String[] movieItem = getItem(position);
-
+        //Title
         if(movieItem[0] == null){
             view.Titel.setText(("Ingen titel"));
        }else{view.Titel.setText(movieItem[0]);}
 
+       //Rating
         if(movieItem[3] == null){
-            view.userRate.setText(("Ingen rating blev fundet"));
-        }else{view.userRate.setText(("R: " + movieItem[3]));}
+            view.rate.setText(("N/A"));
+        }else{view.rate.setText(("R: " + movieItem[3]));}
 
 
+        //watched
+        if(movieItem[5] == null){
+            view.watched.setText(("Watched: N"));
+        }else{view.watched.setText(("Watched:"  + movieItem[5]));}
+
+
+        //UserRating
+        if(movieItem[4] == null){
+            view.userRate.setText(("N/A"));
+        }else{view.userRate.setText(("UR: " + movieItem[4]));}
+
+
+
+        //ICO
         if(movieItem[2] == null){
             view.imgico.setImageResource(R.mipmap.unknown2fl_round);
         }else{
@@ -125,5 +145,12 @@ public class ItemArrAdapt extends ArrayAdapter {
 
         }
         return row;
+    }
+
+
+    public void updateItem(int position, String[] data, IOException e) throws IOException {
+        this.movieList.set(position, data);
+
+
     }
 }
