@@ -28,11 +28,22 @@ public class EditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
 
 
-        backBtn = (Button) findViewById(R.id.button);
+        backBtn = (Button) findViewById(R.id.btnsave);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 goBackMain();
+            }
+
+
+        });
+
+
+        backBtn = (Button) findViewById(R.id.btncancel);
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goBackCancelMain();
             }
 
 
@@ -73,6 +84,13 @@ public class EditActivity extends AppCompatActivity {
         intent.putExtra("POS", recievedPosition);
         startActivity(intent);
     }
+
+    private void goBackCancelMain() {
+        Intent intent;
+        intent = new Intent(this, OverviewActivity.class);
+        startActivity(intent);
+    }
+
 
     public void setSeekbar() {
         seek_Bar = (SeekBar) findViewById(R.id.seekBar);

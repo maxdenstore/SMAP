@@ -1,22 +1,13 @@
 package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.MainThread;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.opencsv.CSVWriter;
-
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -152,5 +143,13 @@ public class ItemArrAdapt extends ArrayAdapter {
         this.movieList.set(position, data);
 
 
+    }
+
+    public List<String[]> getMainList(){
+        return this.movieList;
+    }
+
+    public void setList(List<String[]> L){
+        this.movieList = L;
     }
 }

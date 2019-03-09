@@ -1,4 +1,12 @@
 <resources>
-    <string name="app_name">MaxBarlyJorgensen_au520670_F19SMAP_Assignment1</string>
+    <string name="app_name">Max</string>
     <string name="title_activity_edit">EditActivity</string>
+    <color name="bg">#add8e6</color>
+    <color name="item">#70ffee</color>
+    <color name="knap">#70ffee</color>
+    <string name="knap">Back</string>
+    <string name="exit">Exit</string>
+    <string name="watched">Watched</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 </resources>

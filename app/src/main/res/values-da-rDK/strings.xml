@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Max</string>
+    <string name="title_activity_edit">Ret</string>
+    <string name="knap">Tilbage</string>
+    <string name="exit">Luk</string>
+    <string name="watched">Set</string>
+    <string name="cancel">Anuller</string>
+    <string name="save">Gem</string>
+</resources>
