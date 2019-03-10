@@ -58,6 +58,10 @@ public class EditActivity extends AppCompatActivity {
         setSeekbar();
 
         comment = (EditText) findViewById(R.id.editTextComment);
+        if(data[5].equals("0")){
+            comment.setText(getResources().getString(R.string.comment));
+        }else{comment.setText(data[6]);}
+
 
         final CheckBox checked = (CheckBox) findViewById(R.id.EditWatched);
         if(data[5].equals("true")){
@@ -69,6 +73,7 @@ public class EditActivity extends AppCompatActivity {
                 if(checked.isChecked()){
                     data[5] = "true";
                 }
+                else {data[5] = "false";}
             }
         });
 
