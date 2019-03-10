@@ -84,13 +84,28 @@ public class ItemArrAdapt extends ArrayAdapter {
         //watched
         if(movieItem[5] == null){
             view.watched.setText(("Watched: N"));
-        }else{view.watched.setText(("Watched:"  + movieItem[5]));}
+        }else{
+            if(movieItem[5].equals("true"))
+            {
+                view.watched.setText(("Watched"));
+            }
+            else{
+                view.watched.setText((""));
+            }
+        }
 
 
         //UserRating
         if(movieItem[4] == null){
             view.userRate.setText(("N/A"));
-        }else{view.userRate.setText(("UR: " + movieItem[4]));}
+        }else{
+            if(movieItem[4].equals("0")) {
+                view.userRate.setText(("N/A"));
+            }else {
+                view.userRate.setText(("UR: " + movieItem[4]));
+            }
+
+        }
 
 
 

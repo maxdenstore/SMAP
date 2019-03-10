@@ -1,12 +1,16 @@
 <resources>
-    <string name="app_name">Max</string>
+    <string name="app_name" translatable="false">MaxMovies</string>
     <string name="title_activity_edit">EditActivity</string>
-    <color name="bg">#add8e6</color>
-    <color name="item">#70ffee</color>
-    <color name="knap">#70ffee</color>
+    <string name="title">Title</string>
     <string name="knap">Back</string>
     <string name="exit">Exit</string>
     <string name="watched">Watched</string>
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="comment">Comment</string>
+    <string name="rateing">Rating</string>
+    <string name="urrate">Your Rating</string>
+    <string name="plot">Plot</string>
+    <string name="nocomment">No Comment Yet</string>
 </resources>
+

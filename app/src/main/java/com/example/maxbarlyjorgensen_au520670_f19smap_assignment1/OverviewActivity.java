@@ -58,6 +58,19 @@ public class OverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.overviewactivity);
 
+
+        exitBtn = (Button) findViewById(R.id.button2);
+
+        exitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+
         listView = (ListView)findViewById(R.id.listView);
         itemArrAdapt = new ItemArrAdapt(getApplicationContext(),R.layout.relative);
         listView.setAdapter(itemArrAdapt);
@@ -90,7 +103,6 @@ public class OverviewActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
 
 
 

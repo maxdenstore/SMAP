@@ -60,7 +60,9 @@ public class EditActivity extends AppCompatActivity {
         comment = (EditText) findViewById(R.id.editTextComment);
 
         final CheckBox checked = (CheckBox) findViewById(R.id.EditWatched);
-
+        if(data[5].equals("true")){
+            checked.setChecked(true);
+        }
         checked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,17 +96,21 @@ public class EditActivity extends AppCompatActivity {
 
     public void setSeekbar() {
         seek_Bar = (SeekBar) findViewById(R.id.seekBar);
-        seek_Bar.setProgress(Integer.decode(data[4]));
+        float flval = Float.parseFloat(data[4]);
+        int valCur = (int) (flval*10);
+        seek_Bar.setProgress(valCur);
+
         rating = (TextView) findViewById(R.id.textViewRating);
-        rating.setText(seek_Bar.getProgress() + " / " +seek_Bar.getMax());
+        rating.setText(data[4] + " / " +seek_Bar.getMax()/10);
 
         seek_Bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progressVal;
+            float progressVal;
+            String valCur = String.valueOf(progressVal);
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                progressVal = progress;
-                rating.setText(progress+ " / " +seek_Bar.getMax());
-                data[4] = Integer.toString(progressVal);
+                progressVal =(float) progress;
+                rating.setText(progressVal/10+ " / " +seek_Bar.getMax()/10);
+                data[4] = String.valueOf(progressVal/10);
             }
 
             @Override
@@ -114,8 +120,8 @@ public class EditActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                rating.setText(progressVal+ " / " +seek_Bar.getMax());
-                data[4] = Integer.toString(progressVal);
+                rating.setText(progressVal/10+ " / " +seek_Bar.getMax()/10);
+                data[4] = String.valueOf(progressVal/10);
             }
         });
 
