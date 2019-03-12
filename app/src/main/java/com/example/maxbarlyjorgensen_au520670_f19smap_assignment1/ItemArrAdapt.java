@@ -1,3 +1,6 @@
+//Inspired by https://www.youtube.com/watch?v=FKUlw7mFXRM
+//Icons inspired by
+
 package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
 
 import android.content.Context;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 public class ItemArrAdapt extends ArrayAdapter {
 

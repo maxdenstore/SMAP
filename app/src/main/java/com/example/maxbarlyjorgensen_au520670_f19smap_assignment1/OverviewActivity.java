@@ -141,6 +141,8 @@ public class OverviewActivity extends AppCompatActivity {
         }
     }
 
+
+    //Shared prefs inspired by https://www.youtube.com/watch?v=fJEFZ6EOM9o
     private void getPrefs(){
         SharedPreferences sharedPreferences = getSharedPreferences(LIST_TAG, MODE_PRIVATE);
         Gson gson = new Gson();
