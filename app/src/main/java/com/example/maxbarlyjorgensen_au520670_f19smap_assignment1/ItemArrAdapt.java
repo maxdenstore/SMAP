@@ -10,16 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import DB.MovieModel;
 
 
 public class ItemArrAdapt extends ArrayAdapter {
 
     Context context;
-    private List<String[]> movieList = new ArrayList<String[]>();
+    private List<MovieModel> movieList = new ArrayList<>();
 
 
 
@@ -36,9 +37,9 @@ public class ItemArrAdapt extends ArrayAdapter {
         super(context, resource);
     }
 
-    public void add(String[] object) {
-        movieList.add(object);
-        super.add(object);
+    public void add(MovieModel mov) {
+        movieList.add(mov);
+        super.add(mov);
     }
 
     @Override
@@ -46,7 +47,7 @@ public class ItemArrAdapt extends ArrayAdapter {
         return this.movieList.size();
     }
     @Override
-    public String[] getItem(int position) {
+    public MovieModel getItem(int position) {
         return this.movieList.get(position);
     }
 
@@ -73,23 +74,23 @@ public class ItemArrAdapt extends ArrayAdapter {
             view = (ItemView) row.getTag();
         }
 
-        String[] movieItem = getItem(position);
+        MovieModel movieItem = getItem(position);
         //Title
-        if(movieItem[0] == null){
+        if(movieItem.Title == null){
             view.Titel.setText(("Ingen titel"));
-       }else{view.Titel.setText(movieItem[0]);}
+        }else{view.Titel.setText(movieItem.Title);}
 
-       //Rating
-        if(movieItem[3] == null){
+        //Rating
+        if(movieItem.Rating == null){
             view.rate.setText(("N/A"));
-        }else{view.rate.setText(("R: " + movieItem[3]));}
+        }else{view.rate.setText(("R: " + movieItem.Rating));}
 
 
         //watched
-        if(movieItem[5] == null){
+        if(movieItem.Watched == null){
             view.watched.setText(("Watched: N"));
         }else{
-            if(movieItem[5].equals("true"))
+            if(movieItem.Watched.equals("true"))
             {
                 view.watched.setText(("Watched"));
             }
@@ -100,13 +101,13 @@ public class ItemArrAdapt extends ArrayAdapter {
 
 
         //UserRating
-        if(movieItem[4] == null){
+        if(movieItem.Urating == null){
             view.userRate.setText(("N/A"));
         }else{
-            if(movieItem[4].equals("0")) {
+            if(movieItem.Urating.equals("0")) {
                 view.userRate.setText(("N/A"));
             }else {
-                view.userRate.setText(("UR: " + movieItem[4]));
+                view.userRate.setText(("UR: " + movieItem.Urating));
             }
 
         }
@@ -114,11 +115,11 @@ public class ItemArrAdapt extends ArrayAdapter {
 
 
         //ICO
-        if(movieItem[2] == null){
+        if(movieItem.Genre == null){
             view.imgico.setImageResource(R.mipmap.unknown2fl_round);
         }else{
 
-           String[] firstCategoty = movieItem[2].split(",");
+           String[] firstCategoty = movieItem.Genre.split(",");
 
            switch (firstCategoty[0]) {
                case "Action":
@@ -157,18 +158,4 @@ public class ItemArrAdapt extends ArrayAdapter {
         return row;
     }
 
-
-    public void updateItem(int position, String[] data, IOException e) throws IOException {
-        this.movieList.set(position, data);
-
-
-    }
-
-    public List<String[]> getMainList(){
-        return this.movieList;
-    }
-
-    public void setList(List<String[]> L){
-        this.movieList = L;
-    }
 }

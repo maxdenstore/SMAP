@@ -10,6 +10,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name="MovieService.MovieService"
+            android:enabled="true"
+            android:exported="true"></service>
         <activity
             android:name=".EditActivity"
             android:label="@string/title_activity_edit"
