@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import DB.MovieModel;
+import db.MovieModel;
 
 
 public class ItemArrAdapt extends ArrayAdapter {
@@ -88,7 +88,7 @@ public class ItemArrAdapt extends ArrayAdapter {
 
         //watched
         if(movieItem.Watched == null){
-            view.watched.setText(("Watched: N"));
+            view.watched.setText((""));
         }else{
             if(movieItem.Watched.equals("true"))
             {

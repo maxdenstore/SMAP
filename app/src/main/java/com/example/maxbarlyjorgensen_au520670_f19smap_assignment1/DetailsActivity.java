@@ -1,25 +1,43 @@
 package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
+import db.MovieModel;
+import movieservice.MovieService;
+
 public class DetailsActivity extends AppCompatActivity {
+    MovieService movieService;
+    boolean isBound = false;
+    private MovieModel mov;
     private Button backBtn;
-    private String[] data;
-    private int recievedPosition;
+    private Button deleteBtn;
+  //  private String[] data;
+  //  private int recievedPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detailsactivity);
+        //Intent & bind
+        Intent intentS = new Intent(this, MovieService.class);
+        bindService(intentS, serviceConnection, Context.BIND_AUTO_CREATE);
 
         backBtn = (Button) findViewById(R.id.button);
 
@@ -32,65 +50,60 @@ public class DetailsActivity extends AppCompatActivity {
 
         });
 
+        deleteBtn = (Button) findViewById(R.id.delete);
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                delete();
+            }
+        });
+
      //   data = (String[]) getIntent().getSerializableExtra("DATA");
-        recievedPosition = (int) getIntent().getSerializableExtra("POS");
+     //   recievedPosition = (int) getIntent().getSerializableExtra("POS");
+        Intent dataintent = getIntent();
+        Gson gson = new Gson();
+        String data = "";
+        data = dataintent.getStringExtra("DATA");
+
+        mov = gson.fromJson(data, MovieModel.class);
 
         TextView plot = (TextView) findViewById(R.id.detailsplot);
         String plot2 = getResources().getString(R.string.plot);
-        plot.setText(plot2+"\n" + data[1]);
+        plot.setText(plot2+"\n" + mov.getPlot());
 
         TextView rating = (TextView) findViewById(R.id.rating);
         String rate = getResources().getString(R.string.rateing);
-        rating.setText(rate+"\n" +data[3]);
+        rating.setText(rate+"\n" + mov.getRating());
 
         TextView urating = (TextView) findViewById(R.id.rating2);
-        String urrate = getResources().getString(R.string.urrate);
+        urating.setText(mov.getUrating());
 
-        if(data[4].equals("0")) {
-            urating.setText("N/A");
-        }else {
-            urating.setText(urrate+ "\n" +data[4]);
-        }
-
-
-
-
-
-        String TAG = "værdi";
-        Log.e(TAG, data[0]);
         TextView title = (TextView) findViewById(R.id.titelDetails);
         String titlestr = getResources().getString(R.string.title);
-        title.setText( titlestr+"\n"+ data[0]);
+        title.setText( titlestr+"\n"+ mov.getTitle());
 
         CheckBox checked = (CheckBox) findViewById(R.id.detailswatched);
 
-        if(data[5].equals("true")){
-            checked.setChecked(true);
-        }
+
+        if(TextUtils.isEmpty(mov.getWatched()))
+        {   mov.setWatched("false");
+            checked.setChecked(false);}
+        else{checked.setChecked(true);}
 
 
         TextView comment = (TextView) findViewById(R.id.detailcomment);
-
-        if(data[6].equals("0")) {
-            String com = getResources().getString(R.string.nocomment);
-            comment.setText((com));
-        }
-        if(data[6].equals("Comment")) {
-            String com = getResources().getString(R.string.nocomment);
-            comment.setText((com));
-        }
-        else {
-            comment.setText(data[6]);
+        if(!TextUtils.isEmpty(mov.getComment())){
+            comment.setText(mov.getComment());
         }
 
         ImageView imgset = (ImageView) findViewById(R.id.imageDetail);
 
         //ICO
-        if(data[2] == null){
+        if(mov.getGenre() == null){
             imgset.setImageResource(R.mipmap.unknown2fl_round);
         }else{
 
-            String[] firstCategoty = data[2].split(",");
+            String[] firstCategoty = mov.getGenre().split(",");
 
             switch (firstCategoty[0]) {
                 case "Action":
@@ -130,11 +143,30 @@ public class DetailsActivity extends AppCompatActivity {
     private void goBackMain() {
         Intent intent;
         intent = new Intent(this, OverviewActivity.class);
-        intent.putExtra("DATA", data);
-        intent.putExtra("POS", recievedPosition);
         startActivity(intent);
     }
 
+    private void delete() {
+        movieService.deleteMovie(mov);
+        Intent intent;
+        intent = new Intent(this, OverviewActivity.class);
+        startActivity(intent);
+    }
+
+    //Binding to service
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            MovieService.LocalBinder binder = (MovieService.LocalBinder) service;
+            movieService = binder.getService();
+            isBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            isBound = false;
+        }
+    };
 
 
 

@@ -4,50 +4,23 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.IBinder;
-import android.os.Parcelable;
-import android.os.StrictMode;
-import android.preference.PreferenceManager;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.opencsv.CSVReader;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Consumer;
 
-import DB.MovieModel;
-import MovieService.MovieService;
+import db.MovieModel;
+import movieservice.MovieService;
 
 
 public class OverviewActivity extends AppCompatActivity {
@@ -114,8 +87,8 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(OverviewActivity.this, EditActivity.class);
-           //    i.putExtra("DATA", itemArrAdapt.getItem(position));
-                i.putExtra("POS", position);
+                Gson dataJson = new Gson();
+                i.putExtra("DATA", dataJson.toJson(itemArrAdapt.getItem(position)));
                 startActivity(i);
                 return true;
             }
@@ -126,8 +99,8 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(OverviewActivity.this, DetailsActivity.class);
-           //    i.putExtra("DATA", itemArrAdapt.getItem(position));
-                i.putExtra("POS", position);
+                Gson dataJson = new Gson();
+                i.putExtra("DATA", dataJson.toJson(itemArrAdapt.getItem(position)));
                 startActivity(i);
             }
         });
@@ -192,6 +165,7 @@ public class OverviewActivity extends AppCompatActivity {
     public void addMovieToDB(View view) {
         TitleToadd = (EditText) findViewById(R.id.addTitle);
         movieService.AddFromHttp(TitleToadd.getText().toString());
+        getListFromDatabase();
     }
 
     //testView
@@ -204,15 +178,13 @@ public class OverviewActivity extends AppCompatActivity {
         //First Start
         movieService.buildDb();
         if(movieService.getAll().size() < 1) {
-            Toast.makeText(getApplicationContext(), "Database was new",
+            Toast.makeText(getApplicationContext(), "Database was created",
                     Toast.LENGTH_LONG).show();
 
             LoadFromCSV();
         }
         else{
            List<MovieModel> data = movieService.getAll();
-            Toast.makeText(getApplicationContext(), "Database was loaded",
-                    Toast.LENGTH_LONG).show();
             for (MovieModel mov : data)
             {
                 addToListView(mov);

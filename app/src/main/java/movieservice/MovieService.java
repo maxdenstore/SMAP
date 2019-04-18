@@ -1,4 +1,4 @@
-package MovieService;
+package movieservice;
 
 import android.app.Service;
 import android.arch.persistence.room.Room;
@@ -19,9 +19,9 @@ import com.example.maxbarlyjorgensen_au520670_f19smap_assignment1.R;
 
 import java.io.InputStream;
 import java.util.List;
-import DB.MovieDatabase;
-import DB.MovieModel;
-import HTTP.MovParser;
+import db.MovieDatabase;
+import db.MovieModel;
+import http.MovParser;
 
 public class MovieService extends Service {
     public static MovieDatabase movdb;
@@ -68,7 +68,7 @@ public class MovieService extends Service {
     }
 
     public void buildDb(){
-        movdb = Room.databaseBuilder(getApplicationContext(), MovieDatabase.class, "MovDb")
+        movdb = Room.databaseBuilder(getApplicationContext(), MovieDatabase.class, "MovDbV2")
                 .allowMainThreadQueries()
                 .build();
 
@@ -142,6 +142,7 @@ public class MovieService extends Service {
             mov.Genre = data[2];
             mov.imdbRating = data[3];
             mov.Urating = "N/A";
+            mov.Watched = "false";
             addNew(mov);
 
             Toast.makeText(getApplicationContext(), mov.Title+" was added to DB",
