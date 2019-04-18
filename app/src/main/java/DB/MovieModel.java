@@ -14,7 +14,7 @@ public class MovieModel {
     public String Title;
 
     @ColumnInfo
-    public String Rating;
+    public String imdbRating;
 
     @ColumnInfo
     public String Urating;
@@ -27,6 +27,17 @@ public class MovieModel {
 
     @ColumnInfo
     public String Genre;
+
+    public String getComment() {
+        return Comment;
+    }
+
+    public void setComment(String comment) {
+        Comment = comment;
+    }
+
+    @ColumnInfo
+    public String Comment;
 
 
     public int getId() {
@@ -46,11 +57,11 @@ public class MovieModel {
     }
 
     public String getRating() {
-        return Rating;
+        return imdbRating;
     }
 
     public void setRating(String rating) {
-        Rating = rating;
+        imdbRating = rating;
     }
 
     public String getUrating() {

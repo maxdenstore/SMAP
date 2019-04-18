@@ -32,7 +32,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         });
 
-        data = (String[]) getIntent().getSerializableExtra("DATA");
+     //   data = (String[]) getIntent().getSerializableExtra("DATA");
         recievedPosition = (int) getIntent().getSerializableExtra("POS");
 
         TextView plot = (TextView) findViewById(R.id.detailsplot);

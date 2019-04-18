@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcelable;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -56,6 +58,7 @@ public class OverviewActivity extends AppCompatActivity {
     private ItemArrAdapt itemArrAdapt;
     private Button exitBtn;
     private Button addBtn;
+    private EditText TitleToadd;
 /*    private String[] data;
     private List<String[]> dataPref;
     private static final String PREFS_TAG = "SharedPrefs";
@@ -111,8 +114,8 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(OverviewActivity.this, EditActivity.class);
-/*                i.putExtra("DATA", itemArrAdapt.getItem(position));
-                i.putExtra("POS", position);*/
+           //    i.putExtra("DATA", itemArrAdapt.getItem(position));
+                i.putExtra("POS", position);
                 startActivity(i);
                 return true;
             }
@@ -123,10 +126,8 @@ public class OverviewActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(OverviewActivity.this, DetailsActivity.class);
-/*                i.putExtra("DATA", itemArrAdapt.getItem(position));
-                i.putExtra("POS", position);*/
-
-
+           //    i.putExtra("DATA", itemArrAdapt.getItem(position));
+                i.putExtra("POS", position);
                 startActivity(i);
             }
         });
@@ -148,7 +149,7 @@ public class OverviewActivity extends AppCompatActivity {
             mov.Title = data[0];
             mov.Plot = data[1];
             mov.Genre = data[2];
-            mov.Rating = data[3];
+            mov.imdbRating = data[3];
             mov.Urating = "N/A";
             movieService.addNew(mov);
             itemArrAdapt.add(mov);
@@ -176,7 +177,6 @@ public class OverviewActivity extends AppCompatActivity {
             MovieService.LocalBinder binder = (MovieService.LocalBinder) service;
             movieService = binder.getService();
             isBound = true;
-
             getListFromDatabase();
 
 
@@ -190,9 +190,8 @@ public class OverviewActivity extends AppCompatActivity {
 
     //Add a new movie by title
     public void addMovieToDB(View view) {
-        MovieModel mod = new MovieModel();
-        mod.setTitle("TestTitle");
-        movieService.addNew(mod);
+        TitleToadd = (EditText) findViewById(R.id.addTitle);
+        movieService.AddFromHttp(TitleToadd.getText().toString());
     }
 
     //testView

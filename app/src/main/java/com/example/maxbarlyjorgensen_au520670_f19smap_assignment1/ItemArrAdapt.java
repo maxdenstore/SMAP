@@ -81,9 +81,9 @@ public class ItemArrAdapt extends ArrayAdapter {
         }else{view.Titel.setText(movieItem.Title);}
 
         //Rating
-        if(movieItem.Rating == null){
+        if(movieItem.imdbRating == null){
             view.rate.setText(("N/A"));
-        }else{view.rate.setText(("R: " + movieItem.Rating));}
+        }else{view.rate.setText(("R: " + movieItem.imdbRating));}
 
 
         //watched
