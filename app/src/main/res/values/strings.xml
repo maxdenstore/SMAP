@@ -16,5 +16,6 @@
     <string name="addmov">Write Title</string>
     <string name="noteAdd">Add a new title:</string>
     <string name="delete">Delete</string>
+    <string name="yourrating">Your Rating</string>
 </resources>
 

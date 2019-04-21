@@ -11,7 +11,6 @@ public class MovParser {
 
     public static MovieModel parse(String Response) {
         Gson gson = new GsonBuilder().create();
-        Log.d("parser", Response);
         MovieModel mov = gson.fromJson(Response, MovieModel.class);
         mov.setWatched("false");
         mov.setUrating("0.0");

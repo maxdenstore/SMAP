@@ -1,9 +1,12 @@
 package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,11 +17,13 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.List;
 
+import broadcastreciever.MyBroadcastReceiver;
 import db.MovieModel;
 import movieservice.MovieService;
 
@@ -32,6 +37,7 @@ public class OverviewActivity extends AppCompatActivity {
     private Button exitBtn;
     private Button addBtn;
     private EditText TitleToadd;
+    private MyBroadcastReceiver broadcastReceiver = new MyBroadcastReceiver();
 /*    private String[] data;
     private List<String[]> dataPref;
     private static final String PREFS_TAG = "SharedPrefs";
@@ -47,6 +53,10 @@ public class OverviewActivity extends AppCompatActivity {
         //Intent & bind
         Intent intentS = new Intent(this, MovieService.class);
         bindService(intentS, serviceConnection, Context.BIND_AUTO_CREATE);
+
+        IntentFilter  intentFilter = new IntentFilter();
+       // intentFilter.addAction("Update");
+        registerReceiver(broadcastReceiver, intentFilter);
 
         exitBtn = (Button) findViewById(R.id.button3);
 
@@ -109,7 +119,12 @@ public class OverviewActivity extends AppCompatActivity {
 
 
     }
-    
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+    }
 
     public void LoadFromCSV(){
         //Import list fra CSV
@@ -165,6 +180,7 @@ public class OverviewActivity extends AppCompatActivity {
     public void addMovieToDB(View view) {
         TitleToadd = (EditText) findViewById(R.id.addTitle);
         movieService.AddFromHttp(TitleToadd.getText().toString());
+        sendBroadcast(new Intent(this, BroadcastReceiver.class).setAction("Cast"));
         getListFromDatabase();
     }
 

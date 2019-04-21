@@ -76,7 +76,8 @@ public class DetailsActivity extends AppCompatActivity {
         rating.setText(rate+"\n" + mov.getRating());
 
         TextView urating = (TextView) findViewById(R.id.rating2);
-        urating.setText(mov.getUrating());
+        String urrate = getResources().getString(R.string.yourrating);
+        urating.setText((urrate+"\n" +mov.getUrating()));
 
         TextView title = (TextView) findViewById(R.id.titelDetails);
         String titlestr = getResources().getString(R.string.title);
