@@ -1,3 +1,5 @@
+//inspiration fra: ://www.youtube.com/watch?v=tTbd1Mfi-Sk
+
 package NotificationChannel;
 
 import android.app.Application;

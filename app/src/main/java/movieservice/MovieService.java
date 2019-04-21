@@ -80,7 +80,7 @@ public class MovieService extends Service {
     }
 
     public void buildDb(){
-        movdb = Room.databaseBuilder(getApplicationContext(), MovieDatabase.class, "test5")
+        movdb = Room.databaseBuilder(getApplicationContext(), MovieDatabase.class, "MaxMoviesDB")
                 .allowMainThreadQueries()
                 .build();
 
@@ -133,6 +133,8 @@ public class MovieService extends Service {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Response = null;
+               Toast.makeText(getApplicationContext(), error.getMessage(),
+                Toast.LENGTH_LONG).show();
                 Log.d("ErrorResponse",error.getMessage() + "Fy for satan! :)");
             }
         });
@@ -169,13 +171,14 @@ public class MovieService extends Service {
         StartAsyncNotifier.doInBackground(data);*/
     }
 
+//inspiration fra: https://www.youtube.com/watch?v=uKx0FuVriqA
     private class StartAsyncNotifer extends AsyncTask<List<MovieModel>, Integer,Integer> {
 
         String MovieToNotify;
         int minValue = 0;
         int maxValue = 0;
         int random = 0;
-
+// inspireret af https://stackoverflow.com/questions/21049747/how-can-i-generate-a-random-number-in-a-certain-range/21049922
 
         @Override
         protected Integer doInBackground(List<MovieModel>... lists) {
@@ -185,7 +188,6 @@ public class MovieService extends Service {
                     if(!data.isEmpty())
                     {
                         maxValue = data.size() -1;
-                        // inspireret af https://stackoverflow.com/questions/21049747/how-can-i-generate-a-random-number-in-a-certain-range/21049922
                         random = random = new Random().nextInt((maxValue - minValue) + 1) + minValue;
 
                         MovieToNotify = data.get(random).Title;

@@ -1,3 +1,5 @@
+//inspiration fra https://www.youtube.com/watch?v=f-kcvxYZrB4
+
 package http;
 
 import android.util.Log;
@@ -8,6 +10,7 @@ import com.google.gson.GsonBuilder;
 import db.MovieModel;
 
 public class MovParser {
+
 
     public static MovieModel parse(String Response) {
         Gson gson = new GsonBuilder().create();

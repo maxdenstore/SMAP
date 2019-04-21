@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+// inspiration fra https://www.youtube.com/watch?v=Jwdty9jQN0E&t=2s
 @Entity(tableName = "movies")
 public class MovieModel {
 
