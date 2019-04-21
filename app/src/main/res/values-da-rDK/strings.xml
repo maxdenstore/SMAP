@@ -15,4 +15,9 @@
     <string name="add">Tilføj</string>
     <string name="addmov">Skriv Titel</string>
     <string name="noteAdd">Tilføj en ny titel</string>
+    <string name="delete">Slet</string>
+    <string name="yourrating">Din Vurdering</string>
+    <string name="notseen">Forslået film:</string>
+    <string name="wasadd">blev tilføjet</string>
+    <string name="wasdel">blev slettet</string>
 </resources>

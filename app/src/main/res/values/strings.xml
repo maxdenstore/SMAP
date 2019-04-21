@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">MaxMovies</string>
+    <string name="app_name" translatable="false">au520670 Movies</string>
     <string name="title_activity_edit">EditActivity</string>
     <string name="title">Title</string>
     <string name="knap">Back</string>
@@ -17,5 +17,8 @@
     <string name="noteAdd">Add a new title:</string>
     <string name="delete">Delete</string>
     <string name="yourrating">Your Rating</string>
+    <string name="notseen">Suggested movie:</string>
+    <string name="wasadd">was added</string>
+    <string name="wasdel">was deleted</string>
 </resources>
 

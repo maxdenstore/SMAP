@@ -1,11 +1,17 @@
 package movieservice;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,11 +26,16 @@ import com.example.maxbarlyjorgensen_au520670_f19smap_assignment1.R;
 
 import java.io.InputStream;
 import java.util.List;
+import java.util.Random;
+
 import db.MovieDatabase;
 import db.MovieModel;
 import http.MovParser;
 
+import static NotificationChannel.MovieNotificationChannel.CHANNEL_ID_1;
+
 public class MovieService extends Service {
+    private NotificationManagerCompat notificationManagerCompat;
     public static MovieDatabase movdb;
     public final IBinder iBinder = new LocalBinder();
     public String Title = "";
@@ -34,9 +45,9 @@ public class MovieService extends Service {
 
     @Override
     public void onCreate() {
-        Toast.makeText(getApplicationContext(), "Service Create",
-                Toast.LENGTH_LONG).show();
         super.onCreate();
+        buildDb();
+        StartBGProcess();
     }
 
     @Override
@@ -47,8 +58,8 @@ public class MovieService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Toast.makeText(getApplicationContext(), "Service StartCommand",
-                Toast.LENGTH_LONG).show();
+/*        Toast.makeText(getApplicationContext(), "Service StartCommand",
+                Toast.LENGTH_LONG).show();*/
 
         return super.onStartCommand(intent, flags, startId);
     }
@@ -78,13 +89,11 @@ public class MovieService extends Service {
     public void addNew(MovieModel mod){
         buildDb();
         movdb.movdao().addMovie(mod);
-/*        Toast.makeText(getApplicationContext(), "Saved in DB",
-                Toast.LENGTH_LONG).show();*/
     }
 
     public void deleteMovie(MovieModel mov) {
         movdb.movdao().deleteMovie(mov);
-        Toast.makeText(getApplicationContext(), mov.Title +"was deleted",
+        Toast.makeText(getApplicationContext(), mov.Title +getResources().getString(R.string.wasdel),
                 Toast.LENGTH_LONG).show();
     }
 
@@ -118,7 +127,6 @@ public class MovieService extends Service {
                         Response = response;
                         movFromAPI = MovParser.parse(Response);
                         addNew(movFromAPI);
-                        Log.d("res",movFromAPI.Title + "was added");
                         UpdateUI(movFromAPI.Title);
                     }
                 }, new Response.ErrorListener() {
@@ -137,5 +145,56 @@ public class MovieService extends Service {
         Intent intent = new Intent("Update");
         intent.putExtra("message", movName);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+    }
+
+
+    public void Notifier(String MovieTitle)
+    {
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_ID_1)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setAutoCancel(true)
+                .setPriority(1)
+                .setContentTitle(MovieTitle)
+                .build();
+       // startForeground(1, notification);
+        notificationManagerCompat.notify(1, notification);
+    }
+
+    public void StartBGProcess() {
+        notificationManagerCompat = NotificationManagerCompat.from(this);
+        StartAsyncNotifer StartAsyncNotifier = new StartAsyncNotifer();
+        List<MovieModel> data = movdb.movdao().getAllMovies();
+        StartAsyncNotifier.execute(data);
+/*
+        StartAsyncNotifier.doInBackground(data);*/
+    }
+
+    private class StartAsyncNotifer extends AsyncTask<List<MovieModel>, Integer,Integer> {
+
+        String MovieToNotify;
+        int minValue = 0;
+        int maxValue = 0;
+        int random = 0;
+
+
+        @Override
+        protected Integer doInBackground(List<MovieModel>... lists) {
+            while(true) {
+                try {
+                    List<MovieModel> data = movdb.movdao().getAllMovies();
+                    maxValue = data.size() -1;
+                    random = new Random().nextInt((maxValue - minValue) + 1) + minValue;
+
+                    MovieToNotify = data.get(random).Title;
+                    Notifier(getResources().getString(R.string.notseen) + MovieToNotify);
+                    Thread.sleep(120000);
+
+
+                    //Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

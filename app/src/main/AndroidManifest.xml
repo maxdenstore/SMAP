@@ -6,6 +6,7 @@
 
 
     <application
+        android:name="NotificationChannel.MovieNotificationChannel"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"

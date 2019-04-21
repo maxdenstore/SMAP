@@ -22,8 +22,6 @@ import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.List;
-
-import broadcastreciever.BroadcastReceiverClass;
 import db.MovieModel;
 import movieservice.MovieService;
 
@@ -118,7 +116,7 @@ public class OverviewActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             // Get extra data included in the Intent
             String message = intent.getStringExtra("message");
-            Toast.makeText(getApplicationContext(), message+ "Was added",
+            Toast.makeText(getApplicationContext(), message+ getResources().getString(R.string.wasadd),
                     Toast.LENGTH_LONG).show();
             getListFromDatabase();
 
@@ -171,8 +169,6 @@ public class OverviewActivity extends AppCompatActivity {
             movieService = binder.getService();
             isBound = true;
             getListFromDatabase();
-
-
         }
 
         @Override
@@ -196,7 +192,7 @@ public class OverviewActivity extends AppCompatActivity {
     //Gets all to adapter
     public void getListFromDatabase() {
         //First Start
-        movieService.buildDb();
+     //   movieService.buildDb();
         if(movieService.getAll().isEmpty()) {
             LoadFromCSV();
         }
