@@ -182,12 +182,16 @@ public class MovieService extends Service {
             while(true) {
                 try {
                     List<MovieModel> data = movdb.movdao().getAllMovies();
-                    maxValue = data.size() -1;
-                    random = new Random().nextInt((maxValue - minValue) + 1) + minValue;
+                    if(!data.isEmpty())
+                    {
+                        maxValue = data.size() -1;
+                        // inspireret af https://stackoverflow.com/questions/21049747/how-can-i-generate-a-random-number-in-a-certain-range/21049922
+                        random = random = new Random().nextInt((maxValue - minValue) + 1) + minValue;
 
-                    MovieToNotify = data.get(random).Title;
-                    Notifier(getResources().getString(R.string.notseen) + MovieToNotify);
-                    Thread.sleep(120000);
+                        MovieToNotify = data.get(random).Title;
+                        Notifier(getResources().getString(R.string.notseen) + MovieToNotify);
+                        Thread.sleep(120000);
+                    }
 
 
                     //Thread.sleep(5000);
