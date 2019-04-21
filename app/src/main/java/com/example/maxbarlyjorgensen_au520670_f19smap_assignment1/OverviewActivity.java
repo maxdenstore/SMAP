@@ -198,15 +198,12 @@ public class OverviewActivity extends AppCompatActivity {
         //First Start
         movieService.buildDb();
         if(movieService.getAll().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "Database was created",
-                    Toast.LENGTH_LONG).show();
-            Log.d("fra start", "getListFromDatabase: ");
             LoadFromCSV();
         }
+        //Normal start
         else{
             this.itemArrAdapt.clear();
            List<MovieModel> data = movieService.getAll();
-            Log.d("fra slut", "getListFromDatabase: ");
             for (MovieModel mov : data)
             {
                 addToListView(mov);

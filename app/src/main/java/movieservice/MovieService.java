@@ -84,6 +84,8 @@ public class MovieService extends Service {
 
     public void deleteMovie(MovieModel mov) {
         movdb.movdao().deleteMovie(mov);
+        Toast.makeText(getApplicationContext(), mov.Title +"was deleted",
+                Toast.LENGTH_LONG).show();
     }
 
     public void updateMovie(final MovieModel mov) {
@@ -116,14 +118,14 @@ public class MovieService extends Service {
                         Response = response;
                         movFromAPI = MovParser.parse(Response);
                         addNew(movFromAPI);
-                        Log.d("res",movFromAPI.Title + "Was Added to DB");
+                        Log.d("res",movFromAPI.Title + "was added");
                         UpdateUI(movFromAPI.Title);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Response = null;
-                Log.d("ErrorResponse",error.getMessage());
+                Log.d("ErrorResponse",error.getMessage() + "Fy for satan! :)");
             }
         });
 
@@ -135,26 +137,5 @@ public class MovieService extends Service {
         Intent intent = new Intent("Update");
         intent.putExtra("message", movName);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-
-    public void LoadFromCSV(){
-        //Import list fra CSV
-        InputStream inputStream = getResources().openRawResource(R.raw.movielist);
-        CSVinput csVinput = new CSVinput(inputStream);
-        final List<String[]> movList = csVinput.read();
-
-        for(String[] data : movList) {
-            MovieModel mov = new MovieModel();
-            mov.Title = data[0];
-            mov.Plot = data[1];
-            mov.Genre = data[2];
-            mov.imdbRating = data[3];
-            mov.Urating = "N/A";
-            mov.Watched = "false";
-            addNew(mov);
-
-            Toast.makeText(getApplicationContext(), mov.Title+" was added to DB",
-                    Toast.LENGTH_LONG).show();
-        }
     }
 }
