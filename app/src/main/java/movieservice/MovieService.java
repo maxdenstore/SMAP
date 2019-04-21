@@ -5,6 +5,7 @@ import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -68,7 +69,7 @@ public class MovieService extends Service {
     }
 
     public void buildDb(){
-        movdb = Room.databaseBuilder(getApplicationContext(), MovieDatabase.class, "MovDbV2")
+        movdb = Room.databaseBuilder(getApplicationContext(), MovieDatabase.class, "test5")
                 .allowMainThreadQueries()
                 .build();
 
@@ -116,6 +117,7 @@ public class MovieService extends Service {
                         movFromAPI = MovParser.parse(Response);
                         addNew(movFromAPI);
                         Log.d("res",movFromAPI.Title + "Was Added to DB");
+                        UpdateUI(movFromAPI.Title);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -127,6 +129,12 @@ public class MovieService extends Service {
 
         mQueue.add(stringRequest);
 
+    }
+
+    private void UpdateUI(String movName) {
+        Intent intent = new Intent("Update");
+        intent.putExtra("message", movName);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     public void LoadFromCSV(){

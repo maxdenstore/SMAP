@@ -6,10 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
-import android.net.ConnectivityManager;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,13 +18,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import java.io.InputStream;
 import java.util.List;
 
-import broadcastreciever.MyBroadcastReceiver;
+import broadcastreciever.BroadcastReceiverClass;
 import db.MovieModel;
 import movieservice.MovieService;
 
@@ -37,13 +37,6 @@ public class OverviewActivity extends AppCompatActivity {
     private Button exitBtn;
     private Button addBtn;
     private EditText TitleToadd;
-    private MyBroadcastReceiver broadcastReceiver = new MyBroadcastReceiver();
-/*    private String[] data;
-    private List<String[]> dataPref;
-    private static final String PREFS_TAG = "SharedPrefs";
-    private static final String LIST_TAG = "Liste";
-    public int position;
-    public int recievedPosition = 0;*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +47,9 @@ public class OverviewActivity extends AppCompatActivity {
         Intent intentS = new Intent(this, MovieService.class);
         bindService(intentS, serviceConnection, Context.BIND_AUTO_CREATE);
 
-        IntentFilter  intentFilter = new IntentFilter();
-       // intentFilter.addAction("Update");
-        registerReceiver(broadcastReceiver, intentFilter);
+        //Inspiration fra: https://stackoverflow.com/questions/8802157/how-to-use-localbroadcastmanager
+        LocalBroadcastManager.getInstance(this).registerReceiver( mMessageReceiver,
+                new IntentFilter("Update"));
 
         exitBtn = (Button) findViewById(R.id.button3);
 
@@ -120,10 +113,21 @@ public class OverviewActivity extends AppCompatActivity {
 
     }
 
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // Get extra data included in the Intent
+            String message = intent.getStringExtra("message");
+            Toast.makeText(getApplicationContext(), message+ "Was added",
+                    Toast.LENGTH_LONG).show();
+            getListFromDatabase();
+
+        }
+    };
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(broadcastReceiver);
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mMessageReceiver);
     }
 
     public void LoadFromCSV(){
@@ -140,8 +144,9 @@ public class OverviewActivity extends AppCompatActivity {
             mov.imdbRating = data[3];
             mov.Urating = "N/A";
             movieService.addNew(mov);
-            itemArrAdapt.add(mov);
         }
+        getListFromDatabase();
+
     }
 
     public void startService(View view) {
@@ -181,7 +186,6 @@ public class OverviewActivity extends AppCompatActivity {
         TitleToadd = (EditText) findViewById(R.id.addTitle);
         movieService.AddFromHttp(TitleToadd.getText().toString());
         sendBroadcast(new Intent(this, BroadcastReceiver.class).setAction("Cast"));
-        getListFromDatabase();
     }
 
     //testView
@@ -193,14 +197,16 @@ public class OverviewActivity extends AppCompatActivity {
     public void getListFromDatabase() {
         //First Start
         movieService.buildDb();
-        if(movieService.getAll().size() < 1) {
+        if(movieService.getAll().isEmpty()) {
             Toast.makeText(getApplicationContext(), "Database was created",
                     Toast.LENGTH_LONG).show();
-
+            Log.d("fra start", "getListFromDatabase: ");
             LoadFromCSV();
         }
         else{
+            this.itemArrAdapt.clear();
            List<MovieModel> data = movieService.getAll();
+            Log.d("fra slut", "getListFromDatabase: ");
             for (MovieModel mov : data)
             {
                 addToListView(mov);

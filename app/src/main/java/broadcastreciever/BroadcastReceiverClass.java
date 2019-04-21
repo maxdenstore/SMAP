@@ -5,9 +5,13 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-public class MyBroadcastReceiver extends android.content.BroadcastReceiver {
+import com.example.maxbarlyjorgensen_au520670_f19smap_assignment1.OverviewActivity;
+
+public class BroadcastReceiverClass extends android.content.BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-            Log.d("Hej", intent.getAction());
+
+        if(intent.getAction() == "Update") {
+        }
     }
 }

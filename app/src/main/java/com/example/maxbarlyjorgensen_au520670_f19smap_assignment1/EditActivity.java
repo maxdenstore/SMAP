@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -78,7 +79,6 @@ public class EditActivity extends AppCompatActivity {
 
         comment = (EditText) findViewById(R.id.editTextComment);
 
-
         final CheckBox checked = (CheckBox) findViewById(R.id.EditWatched);
         checked.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,8 +90,11 @@ public class EditActivity extends AppCompatActivity {
             }
         });
         if(TextUtils.isEmpty(mov.getWatched()))
-        {checked.setChecked(false);}
-        else{checked.setChecked(true);}
+        {mov.setWatched("false");}
+        if(mov.getWatched().equals("false")){
+            checked.setChecked(false);
+        }else{checked.setChecked(true);}
+
 
         if(!TextUtils.isEmpty(mov.getComment())){
             comment.setText(mov.getComment());

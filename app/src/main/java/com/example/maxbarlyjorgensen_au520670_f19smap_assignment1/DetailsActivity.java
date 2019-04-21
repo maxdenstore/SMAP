@@ -87,9 +87,11 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         if(TextUtils.isEmpty(mov.getWatched()))
-        {   mov.setWatched("false");
-            checked.setChecked(false);}
-        else{checked.setChecked(true);}
+        {mov.setWatched("false");}
+        if(mov.getWatched().equals("false")){
+            checked.setChecked(false);
+        }else{checked.setChecked(true);}
+
 
 
         TextView comment = (TextView) findViewById(R.id.detailcomment);
