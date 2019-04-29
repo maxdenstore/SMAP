@@ -1,7 +1,6 @@
 package movieservice;
 
 import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.Service;
 import android.arch.persistence.room.Room;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,10 +19,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.maxbarlyjorgensen_au520670_f19smap_assignment1.CSVinput;
-import com.example.maxbarlyjorgensen_au520670_f19smap_assignment1.R;
+import com.example.maxbarlyjorgensen_au520670_f19smap_assignment2.R;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Random;
 

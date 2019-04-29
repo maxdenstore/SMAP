@@ -1,11 +1,8 @@
 //inspired by https://stackoverflow.com/questions/43055661/reading-csv-file-in-android-app
 
-package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
-
-import com.opencsv.CSVReader;
+package com.example.maxbarlyjorgensen_au520670_f19smap_assignment2;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;

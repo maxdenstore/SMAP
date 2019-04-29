@@ -1,4 +1,4 @@
-package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
+package com.example.maxbarlyjorgensen_au520670_f19smap_assignment2;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -8,17 +8,13 @@ import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
-
-import java.util.ArrayList;
 
 import db.MovieModel;
 import movieservice.MovieService;

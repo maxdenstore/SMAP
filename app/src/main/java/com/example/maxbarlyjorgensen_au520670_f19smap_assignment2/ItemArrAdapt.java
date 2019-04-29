@@ -1,7 +1,7 @@
 //Inspired by https://www.youtube.com/watch?v=FKUlw7mFXRM
 //Icons inspired by
 
-package com.example.maxbarlyjorgensen_au520670_f19smap_assignment1;
+package com.example.maxbarlyjorgensen_au520670_f19smap_assignment2;
 
 import android.content.Context;
 import android.view.LayoutInflater;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.maxbarlyjorgensen_au520670_f19smap_assignment1">
+    package="com.example.maxbarlyjorgensen_au520670_f19smap_assignment2">
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET"/>
 
@@ -19,17 +19,17 @@
             android:enabled="true"
             android:exported="true"></service>
         <activity
-            android:name=".EditActivity"
+            android:name="com.example.maxbarlyjorgensen_au520670_f19smap_assignment2.EditActivity"
             android:label="@string/title_activity_edit"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".OverviewActivity">
+        <activity android:name="com.example.maxbarlyjorgensen_au520670_f19smap_assignment2.OverviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name="com.example.maxbarlyjorgensen_au520670_f19smap_assignment2.DetailsActivity"></activity>
         <uses-library android:name="org.apache.http.legacy" android:required="false" />
 
     </application>
