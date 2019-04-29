@@ -19,18 +19,12 @@ public class MovieNotificationChannel extends Application {
 
     private void CreateNotificationChannels() {
          if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-             //Channel
              NotificationChannel channel = new NotificationChannel(CHANNEL_ID_1, "Channel_1",
                      NotificationManager.IMPORTANCE_LOW
              );
 
              NotificationManager manager = getSystemService(NotificationManager.class);
              manager.createNotificationChannel(channel);
-
-             //Gør den så irriterende som mulig:
-/*             channel.enableVibration(true);
-             channel.enableLights(true);*/
-
 
          }
 

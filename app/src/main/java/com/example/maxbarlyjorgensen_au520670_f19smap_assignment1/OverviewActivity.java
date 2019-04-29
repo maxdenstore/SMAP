@@ -75,14 +75,6 @@ public class OverviewActivity extends AppCompatActivity {
         itemArrAdapt = new ItemArrAdapt(getApplicationContext(),R.layout.relative);
         listView.setAdapter(itemArrAdapt);
 
-       // this.getPrefs();
-/*
-        this.getListFromDataba;
-        this.intentHandler();
-        this.setPrefs();*/
-
-      //  getListFromDatabase(listView);
-
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -192,7 +184,6 @@ public class OverviewActivity extends AppCompatActivity {
     //Gets all to adapter
     public void getListFromDatabase() {
         //First Start
-     //   movieService.buildDb();
         if(movieService.getAll().isEmpty()) {
             LoadFromCSV();
         }
@@ -207,57 +198,6 @@ public class OverviewActivity extends AppCompatActivity {
 
         }
     }
-
-    /*    public void intentHandler() {
-        //Data modtaget fra Edit
-        Intent intent = getIntent();
-        if (intent.hasExtra("DATA")) {
-            data = (String[]) getIntent().getSerializableExtra("DATA");
-            recievedPosition = (int) getIntent().getSerializableExtra("POS");
-            if(recievedPosition != 0){
-                IOException e = new  IOException();
-                try {
-                    itemArrAdapt.updateItem(recievedPosition, data, e);
-                    this.setPrefs();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        } else {
-            // Start Normal
-        }
-    }*/
-
-
-    //Shared prefs inspired by https://www.youtube.com/watch?v=fJEFZ6EOM9o
-/*    private void getPrefs(){
-        SharedPreferences sharedPreferences = getSharedPreferences(LIST_TAG, MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString(PREFS_TAG, null);
-        Type type = new TypeToken<ArrayList<String[]>>() {}.getType();
-        dataPref = gson.fromJson(json, type);
-
-        if(dataPref == null){
-            LoadFromCSV();
-        }
-        else {
-            Log.d("getPrefs", "was called ");
-            itemArrAdapt.setList(dataPref);
-        }
-
-    }*/
-
-/*    private void setPrefs(){
-
-        SharedPreferences sharedPreferences = getSharedPreferences(LIST_TAG, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        Gson gson = new Gson();
-        String json = gson.toJson(itemArrAdapt.getMainList());
-        editor.putString(PREFS_TAG, json);
-        editor.apply();
-        Log.d("setPrefs", "was called ");
-
-    }*/
 }
 
 

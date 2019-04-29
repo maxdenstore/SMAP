@@ -87,7 +87,6 @@ public class MovieService extends Service {
     }
 
     public void addNew(MovieModel mod){
-        buildDb();
         movdb.movdao().addMovie(mod);
     }
 
@@ -106,7 +105,6 @@ public class MovieService extends Service {
     }
 
     public List<MovieModel> getAll(){
-        buildDb();
         List<MovieModel> result = movdb.movdao().getAllMovies();
         return result;
     }
@@ -158,7 +156,6 @@ public class MovieService extends Service {
                 .setPriority(1)
                 .setContentTitle(MovieTitle)
                 .build();
-       // startForeground(1, notification);
         notificationManagerCompat.notify(1, notification);
     }
 
@@ -167,8 +164,6 @@ public class MovieService extends Service {
         StartAsyncNotifer StartAsyncNotifier = new StartAsyncNotifer();
         List<MovieModel> data = movdb.movdao().getAllMovies();
         StartAsyncNotifier.execute(data);
-/*
-        StartAsyncNotifier.doInBackground(data);*/
     }
 
 //inspiration fra: https://www.youtube.com/watch?v=uKx0FuVriqA
@@ -178,8 +173,8 @@ public class MovieService extends Service {
         int minValue = 0;
         int maxValue = 0;
         int random = 0;
-// inspireret af https://stackoverflow.com/questions/21049747/how-can-i-generate-a-random-number-in-a-certain-range/21049922
 
+// inspireret af https://stackoverflow.com/questions/21049747/how-can-i-generate-a-random-number-in-a-certain-range/21049922
         @Override
         protected Integer doInBackground(List<MovieModel>... lists) {
             while(true) {

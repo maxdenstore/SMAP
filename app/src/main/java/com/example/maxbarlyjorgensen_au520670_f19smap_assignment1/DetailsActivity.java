@@ -58,8 +58,6 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-     //   data = (String[]) getIntent().getSerializableExtra("DATA");
-     //   recievedPosition = (int) getIntent().getSerializableExtra("POS");
         Intent dataintent = getIntent();
         Gson gson = new Gson();
         String data = "";
